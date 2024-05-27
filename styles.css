@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
   --red: hsl(0, 100%, 74%);
@@ -30,6 +30,7 @@ body {
   max-width: 80vw;
   margin: 0 auto;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 4rem;
 }
@@ -73,11 +74,16 @@ form {
   border-radius: 1rem;
 }
 
+label {
+  position: relative;
+  display: block;
+  margin-bottom: 1.2rem;
+}
+
 input {
   display: block;
   width: 100%;
   padding: 1rem 1.5rem;
-  margin-bottom: 1.2rem;
   border: 1px solid var(--grayish-blue);
   border-radius: 0.5rem;
   font-family: inherit;
@@ -121,4 +127,56 @@ small span {
   color: var(--red);
   font-weight: 600;
   cursor: pointer;
+}
+
+.error-message {
+  color: var(--red);
+  font-size: 0.75rem;
+  margin-top: 0.3rem;
+  display: none;
+  position: absolute;
+  right: 1rem;
+}
+
+.error-icon {
+  color: var(--red);
+  font-size: 1.5rem;
+  display: none;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+input.error ~ .error-message,
+input.error + .error-icon {
+  display: inline;
+}
+
+.password-container {
+  position: relative;
+}
+
+.password-container .error-icon {
+  right: 3rem; 
+}
+
+.toggle-password {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
 }

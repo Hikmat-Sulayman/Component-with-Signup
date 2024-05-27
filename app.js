@@ -4,52 +4,43 @@ const firstName = document.querySelector('.firstName');
 const lastName = document.querySelector('.lastName');
 const email = document.querySelector('.email');
 const password = document.querySelector('.password');
-
-console.log(firstName);
-
-// console.log(firstName, lastName, email, password);
+const togglePassword = document.querySelector('.toggle-password');
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  const fName = firstName.value;
-  const lName = lastName.value;
-  const emailVal = email.value;
-  const passwordVal = password.value;
-  console.log(fName, lName, emailVal, passwordVal);
+  const fName = firstName.value.trim();
+  const lName = lastName.value.trim();
+  const emailVal = email.value.trim();
+  const passwordVal = password.value.trim();
 
-  // Check first name
-  if (fName === '') {
-    firstName.classList.add('error');
-  } else {
-    firstName.classList.remove('error');
-  }
-  // Check last name
-
-  if (lName === '') {
-    lastName.classList.add('error');
-  } else {
-    lastName.classList.remove('error');
-  }
-  // Check email
-
-  if (!validateEmail(emailVal) || emailVal === '') {
-    email.classList.add('error');
-  } else {
-    email.classList.remove('error');
-  }
-
-  // Check password
-
-  if (passwordVal === '') {
-    password.classList.add('error');
-  } else {
-    password.classList.remove('error');
-  }
+  validateField(firstName, fName === '', "First Name cannot be empty");
+  validateField(lastName, lName === '', "Last Name cannot be empty");
+  validateField(email, !validateEmail(emailVal) || emailVal === '', "Looks like this is not an email");
+  validateField(password, passwordVal === '', "Password cannot be empty");
 });
 
-//Validate email
+function validateField(field, condition, message) {
+  const errorMessage = field.nextElementSibling;
+  const errorIcon = errorMessage.nextElementSibling;
+  if (condition) {
+    field.classList.add('error');
+    errorMessage.textContent = message;
+    errorMessage.style.display = 'inline';
+    errorIcon.style.display = 'inline';
+  } else {
+    field.classList.remove('error');
+    errorMessage.style.display = 'none';
+    errorIcon.style.display = 'none';
+  }
+}
+
 function validateEmail(email) {
-  var re =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 }
+
+togglePassword.addEventListener('click', () => {
+  const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+  password.setAttribute('type', type);
+  togglePassword.textContent = type === 'password' ? '👁' : '👁️‍🗨️';
+});
